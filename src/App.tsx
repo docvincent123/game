@@ -196,7 +196,9 @@ export default function App() {
     event.preventDefault()
     const text = message.trim()
     if (!text) return
-    setChat((current) => [...current, { name: callsign, side: faction ?? 'neutral', text }].slice(-8))
+    const chatSide: FactionId = faction ?? 'neutral'
+    const nextMessage: ChatMessage = { name: callsign, side: chatSide, text }
+    setChat((current) => [...current, nextMessage].slice(-8))
     setMessage('')
   }
 
