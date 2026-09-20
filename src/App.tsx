@@ -34,6 +34,7 @@ const GameCanvas = lazy(() => import('./game/GameCanvas').then((module) => ({ de
 type AppView = 'world' | 'hq' | 'faction' | 'profile' | 'tactical'
 type PlayerFaction = Exclude<FactionId, 'neutral'>
 type WarEvent = { time: string; side: FactionId; text: string }
+type ChatMessage = { name: string; side: FactionId; text: string }
 
 const factionInfo = {
   aegis: {
@@ -69,7 +70,7 @@ export default function App() {
   const [role, setRole] = useState(() => localStorage.getItem('frontline-role') || 'recon')
   const [callsign, setCallsign] = useState(() => localStorage.getItem('frontline-callsign') || 'RAVEN-021')
   const [deployments, setDeployments] = useState(() => Number(localStorage.getItem('frontline-deployments') || '0'))
-  const [chat, setChat] = useState([
+  const [chat, setChat] = useState<ChatMessage[]>([
     { name: 'HQ', side: 'aegis', text: 'C2 needs more pressure. Keep the supply line open.' },
     { name: 'KRAKEN-4', side: 'aegis', text: 'Armor group moving toward Karsten.' },
     { name: 'SYSTEM', side: 'neutral', text: 'Prototype chat is local-only in this build.' },
@@ -195,7 +196,7 @@ export default function App() {
     event.preventDefault()
     const text = message.trim()
     if (!text) return
-    setChat((current) => [...current, { name: callsign, side: faction || 'neutral', text }].slice(-8))
+    setChat((current) => [...current, { name: callsign, side: faction ?? 'neutral', text }].slice(-8))
     setMessage('')
   }
 
