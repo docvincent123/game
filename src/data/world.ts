@@ -40,7 +40,7 @@ export const sectorLinks: Array<[string, string]> = [
   ['D2', 'D3'], ['D2', 'E1'], ['D3', 'E1'], ['D3', 'E2'],
 ]
 
-export const initialEvents = [
+export const initialEvents: Array<{ time: string; side: FactionId; text: string }> = [
   { time: '11:42', side: 'aegis', text: 'Aegis forces reinforced Novyi Krai.' },
   { time: '11:39', side: 'vanguard', text: 'Vanguard opened an assault on Broken Line.' },
   { time: '11:33', side: 'neutral', text: 'Redwood Pass became contested.' },
